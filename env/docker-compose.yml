@@ -1,0 +1,14 @@
+services:
+    ros:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                DISTRO: ${DISTRO}
+        image: my-ros:${DISTRO}
+        container_name: "${DISTRO}"
+        shm_size: "10gb"
+        volumes:
+            - ~/usr/slam/:/home/ubuntu/mnt
+        ports:
+            - 6080:80
