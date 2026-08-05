@@ -13,7 +13,7 @@ start:
 in:
 	docker exec -it ${dstr} bash
 
-in-ubuntu:
+inu:
 	docker exec -u ubuntu -it ${dstr} bash
 
 
