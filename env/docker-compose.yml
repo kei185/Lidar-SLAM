@@ -5,10 +5,13 @@ services:
             dockerfile: Dockerfile
             args:
                 DISTRO: ${DISTRO}
+                MNT_POINT: ${MNT_POINT}
         image: my-ros:${DISTRO}
         container_name: "${DISTRO}"
         shm_size: "10gb"
         volumes:
-            - ~/usr/slam/:/home/ubuntu/mnt
+            - ${MNT_POINT}:/home/ubuntu/mnt
+        devices:
+            - ${DEVICE}:${DEVICE}
         ports:
             - 6080:80

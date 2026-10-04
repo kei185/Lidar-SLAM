@@ -1,6 +1,8 @@
 
 dstr := $(shell cat .env | grep DISTRO | cut -d '=' -f 2)
 
+.PHONY: init up down start in inu stop
+
 up:
 	docker-compose up -d
 
@@ -19,3 +21,7 @@ inu:
 
 stop:
 	docker stop ${dstr}
+
+
+init:
+	sh init.sh
