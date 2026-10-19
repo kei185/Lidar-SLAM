@@ -6,12 +6,13 @@ services:
             args:
                 DISTRO: ${DISTRO}
                 MNT_POINT: ${MNT_POINT}
+        # DEVICE: ${DEVICE}
         image: my-ros:${DISTRO}
         container_name: "${DISTRO}"
         shm_size: "10gb"
         volumes:
             - ${MNT_POINT}:/home/ubuntu/mnt
         devices:
-            - ${DEVICE}:${DEVICE}
+        - ${DEVICE}:${DEVICE}
         ports:
             - 6080:80
