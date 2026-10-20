@@ -1,0 +1,19 @@
+services:
+    ros:
+        build:
+            context: .
+            dockerfile: Dockerfile_release
+            args:
+                DISTRO: ${DISTRO}
+                MNT_POINT: ${MNT_POINT}
+        # DEVICE: ${DEVICE}
+        image: my-ros:${DISTRO}
+        init: true
+        network_mode: host
+        command: tail -F /dev/null
+        container_name: "${DISTRO}"
+        shm_size: "8gb"
+        volumes:
+            - ${MNT_POINT}:/root/mnt
+        devices:
+            - ${DEVICE}:${DEVICE}
