@@ -1,0 +1,21 @@
+<CycloneDDS>
+  <Domain>
+    <General>
+      <Interfaces>
+        <NetworkInterface name="eth0"/>
+      </Interfaces>
+      <MaxMessageSize>1400 B</MaxMessageSize>
+      <FragmentSize>1200 B</FragmentSize>
+      <AllowMulticast>false</AllowMulticast>
+      <ExternalNetworkAddress>${ROS_LOCAL_IP}</ExternalNetworkAddress>
+    </General>
+    <Discovery>
+      <ParticipantIndex>auto</ParticipantIndex>
+      <MaxAutoParticipantIndex>50</MaxAutoParticipantIndex>
+      <Peers>
+        <Peer Address="${ROS_PEER_IP}"/>
+        <Peer Address="127.0.0.1"/>
+      </Peers>
+    </Discovery>
+  </Domain>
+</CycloneDDS>

@@ -2,6 +2,9 @@ ARG DISTRO=jazzy
 # https://github.com/Tiryoh/docker-ros2-desktop-vnc
 FROM tiryoh/ros2-desktop-vnc:${DISTRO}
 
+# RUN sed -i 's@websockify --web=/usr/lib/novnc 80 localhost:5901@websockify --web=/usr/lib/novnc 6080 localhost:5901@' /entrypoint.sh
+# hostネットワークでも一般ユーザーが待ち受けられる6080番を使う。
+
 RUN apt update
 RUN apt install tree clang-format -y
 
@@ -19,6 +22,7 @@ RUN sudo apt install gcc-16 g++-16 clangd-20 -y
 ARG DISTRO
 RUN apt install \
     ros-${DISTRO}-desktop \
+    ros-${DISTRO}-rmw-cyclonedds-cpp \
     ros-${DISTRO}-slam-toolbox \
     ros-${DISTRO}-navigation2 \
     ros-${DISTRO}-nav2-bringup \
@@ -43,5 +47,8 @@ RUN echo "export XAUTHORITY=/home/ubuntu/.Xauthority" >> /root/.bashrc
 ENV ROS_DOMAIN_ID=0
 ENV ROS_AUTOMATIC_DISCOVERY_RANGE=SUBNET
 
+COPY fastdds.xml /etc/fastdds.xml
+ENV FASTRTPS_DEFAULT_PROFILES_FILE=/etc/fastdds.xml
+# FastDDSのUDPを1400バイト以下に分割し、IPフラグメントを避ける。
 
 WORKDIR /home/ubuntu/mnt

@@ -8,11 +8,19 @@ services:
                 MNT_POINT: ${MNT_POINT}
         # DEVICE: ${DEVICE}
         image: my-ros:${DISTRO}
+        network_mode: bridge
+        environment:
+            ROS_DOMAIN_ID: 0
+            RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+            ROS_AUTOMATIC_DISCOVERY_RANGE: SYSTEM_DEFAULT
+            CYCLONEDDS_URI: file:///etc/cyclonedds.xml
+            ROS_LOCAL_IP: ${ROS_LOCAL_IP}
+            ROS_PEER_IP: ${ROS_PEER_IP}
         container_name: "${DISTRO}"
+        ports:
+            - "6080:6080"
+            - "7410-7511:7410-7511/udp"
         shm_size: "10gb"
         volumes:
             - ${MNT_POINT}:/home/ubuntu/mnt
-        devices:
-        - ${DEVICE}:${DEVICE}
-        ports:
-            - 6080:80
+            - ./cyclonedds.xml:/etc/cyclonedds.xml:ro

@@ -4,11 +4,11 @@ ARG DISTRO=jazzy
 FROM ros:${DISTRO}
 
 RUN sudo apt update
-RUN sudo apt install tree clang-format -y
+RUN sudo apt install wget tree clang-format -y
 
 # cmake の新しいやつ
-# RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
-# RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
 RUN sudo apt update
 RUN sudo apt install cmake -y
 
@@ -41,5 +41,8 @@ RUN echo "alias ros='ros2'"  >> /etc/bash.bashrc
 ENV ROS_DOMAIN_ID=0
 ENV ROS_AUTOMATIC_DISCOVERY_RANGE=SUBNET
 
+COPY fastdds.xml /etc/fastdds.xml
+ENV FASTRTPS_DEFAULT_PROFILES_FILE=/etc/fastdds.xml
+# FastDDSのUDPを1400バイト以下に分割し、IPフラグメントを避ける。
 
 WORKDIR /root/mnt
