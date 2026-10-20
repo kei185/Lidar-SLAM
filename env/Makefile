@@ -7,13 +7,13 @@ up:
 	docker-compose up -d
 
 upr:
-	docker-compose up -d -f docker-compose.release.yml
+	docker compose up -d -f docker-compose.release.yml
 
 down:
 	docker-compose down
 
 downr:
-	docker-compose down  -f docker-compose.release.yml
+	docker compose down  -f docker-compose.release.yml
 
 
 start:
