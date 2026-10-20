@@ -18,7 +18,7 @@ services:
             ROS_PEER_IP: ${ROS_PEER_IP}
         container_name: "${DISTRO}"
         ports:
-            - "6080:6080"
+            - "6080:80"
             - "7410-7511:7410-7511/udp"
         shm_size: "10gb"
         volumes:
